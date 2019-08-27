@@ -1,0 +1,25 @@
+---
+- name: Remove old templates from VMs
+  hosts: localhost
+  vars:
+    hostname: fill-me
+    username: fill-me
+    password: fill-me
+
+  tasks:
+  - name: Create vds portgroup with vlan and all security policies
+    vmware_dvs_portgroup:
+      hostname: '{{ hostname }}'
+      username: '{{ username }}'
+      password: '{{ password }}'
+      validate_certs: no
+      portgroup_name: Ansible-Test
+      switch_name: Infra
+      vlan_id: 5
+      num_ports: 8
+      portgroup_type: earlyBinding
+      state: present
+      network_policy:
+        promiscuous: no
+        forged_transmits: no
+        mac_changes: no
