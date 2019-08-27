@@ -1,0 +1,23 @@
+---
+
+    tasks:
+    - name: Enable SSH on VCenter
+
+  - name: vcenter login
+    uri:
+      url: "https://{{secret.vcenter}}/rest/com/vmware/cis/session"
+      force_basic_auth: yes
+      method: POST
+      user: administrator@vsphere.local
+      password: VMware1!
+      status_code: 200
+      validate_certs: no
+    register: login
+
+
+  - name: EnableBadSSH
+    uri:
+      url: "https://{{secret.vcenter}}/rest/appliance/access/ssh"
+      force_basic_auth: yes
+      validate_certs: no
+      reguest_body: {"enabled":true}
